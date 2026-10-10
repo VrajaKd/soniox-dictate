@@ -78,6 +78,7 @@ class SonioxClient:
         try:
             self.websocket = await websockets.connect(
                 self.ENDPOINT,
+                additional_headers={"Authorization": f"Bearer {self.api_key}"},
                 ping_interval=20,
                 ping_timeout=20,
             )
@@ -85,7 +86,6 @@ class SonioxClient:
 
             # Send initial configuration
             config: dict[str, Any] = {
-                "api_key": self.api_key,
                 "model": self.MODEL,
                 "audio_format": audio_format,
                 "language_hints": [language],
